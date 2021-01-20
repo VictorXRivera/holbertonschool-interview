@@ -26,5 +26,11 @@ int recursive_check(listint_t **left, listint_t *right)
  */
 int is_palindrome(listint_t **head)
 {
+	if (head == NULL)
+		return (1);
+
+	if (*head == NULL)
+		return (1);
+
 	return (recursive_check(&(*head), *head));
 }
