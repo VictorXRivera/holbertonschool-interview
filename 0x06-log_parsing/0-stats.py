@@ -7,6 +7,7 @@ A script that reads stdin line by line and computes metrics
 import sys
 
 if __name__ == "__main__":
+
     number, cout = 0, 0
     fileSize = 0
     Dict = {"200": 0,
@@ -47,4 +48,4 @@ if __name__ == "__main__":
             if j:
                 print("{}: {}".format(i, j))
         raise
-    
+
