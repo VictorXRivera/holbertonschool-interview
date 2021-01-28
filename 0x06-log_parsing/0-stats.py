@@ -1,50 +1,41 @@
 #!/usr/bin/python3
-
-"""
-A script that reads stdin line by line and computes metrics
-"""
+""" Script that reads stdin line by line and computes metrics."""
 
 import sys
 
+formatString = {"size": 0,
+                "lines": 1}
+
+statusCodes = {"200": 0, "301": 0, "400": 0, "401": 0,
+               "403": 0, "404": 0, "405": 0, "500": 0}
+
+
+def printf():
+    """Helper function to print string"""
+    print("File size: {}".format(formatString["size"]))
+    for key in sorted(statusCodes.keys()):
+        if statusCodes[key] != 0:
+            print("{}: {}".format(key, statusCodes[key]))
+
+
+def datasize(data):
+    """ Count file codes and size"""
+    formatString["size"] += int(data[-1])
+    if data[-2] in statusCodes:
+        statusCodes[data[-2]] += 1
+
+
 if __name__ == "__main__":
-
-    number, cout = 0, 0
-    fileSize = 0
-    Dict = {"200": 0,
-            "301": 0,
-            "400": 0,
-            "401": 0,
-            "403": 0,
-            "404": 0,
-            "405": 0,
-            "500": 0}
-
-    def setDict(key):
-        if key in Dict.keys():
-            Dict[key] += 1
-        else:
-            pass
     try:
         for line in sys.stdin:
-            number += 1
-            word = line.split(" ")
             try:
-                fileSize += int(word[-1])
-                setDict(word[-2])
-            except BaseException:
+                datasize(line.split(" "))
+            except:
                 pass
-            if number % 10 == 0:
-                print("File size: {}".format(fileSize))
-                for i, j in sorted(Dict.items()):
-                    if j:
-                        print("{}: {}".format(i, j))
-        print("File size: {}".format(fileSize))
-        for i, j in sorted(Dict.items()):
-            if j:
-                print("{}: {}".format(i, j))
-
+            if formatString["lines"] % 10 == 0:
+                printf()
+            formatString["lines"] += 1
     except KeyboardInterrupt:
-        for i, j in sorted(Dict.items()):
-            if j:
-                print("{}: {}".format(i, j))
+        printf()
         raise
+    printf()
