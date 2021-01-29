@@ -48,4 +48,3 @@ def log_parser():
 
 if __name__ == "__main__":
     log_parser()
-
