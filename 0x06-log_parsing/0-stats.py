@@ -1,41 +1,50 @@
 #!/usr/bin/python3
-""" Script that reads stdin line by line and computes metrics."""
+
+"""
+Script that reads stdin line by line and displays metrics.
+Example:
+    File size: <total size>
+    <status code>: <number>
+"""
 
 import sys
 
-formatString = {"size": 0,
-                "lines": 1}
 
-statusCodes = {"200": 0, "301": 0, "400": 0, "401": 0,
-               "403": 0, "404": 0, "405": 0, "500": 0}
+def log_parser():
+    """Log parsing function"""
+    file_size = 0
+    iterator = 0
+    status_codes = {'200', '301', '400', '401', '403', '404', '405', '500'}
+    stat_codes_dict = {'200': 0, '301': 0,
+                       '400': 0, '401': 0,
+                       '403': 0, '404': 0,
+                       '405': 0, '500': 0}
 
-
-def printf():
-    """Helper function to print string"""
-    print("File size: {}".format(formatString["size"]))
-    for key in sorted(statusCodes.keys()):
-        if statusCodes[key] != 0:
-            print("{}: {}".format(key, statusCodes[key]))
-
-
-def datasize(data):
-    """ Count file codes and size"""
-    formatString["size"] += int(data[-1])
-    if data[-2] in statusCodes:
-        statusCodes[data[-2]] += 1
-
-
-if __name__ == "__main__":
     try:
         for line in sys.stdin:
-            try:
-                datasize(line.split(" "))
-            except:
-                pass
-            if formatString["lines"] % 10 == 0:
-                printf()
-            formatString["lines"] += 1
+            newlines = line.split(" ")
+            if len(newlines) > 2:
+                stat_code = newlines[-2]
+                f_size = newlines[-1]
+                if stat_code in status_codes:
+                    stat_codes_dict[stat_code] += 1
+                file_size += int(f_size)
+                iterator += 1
+
+            if iterator == 10:
+                print("File size: {:d}".format(file_size))
+                for k, v in sorted(stat_codes_dict.items()):
+                    if v != 0:
+                        print("{}: {:d}".format(k, v))
+                    iterator = 0
+
     except KeyboardInterrupt:
-        printf()
         raise
-    printf()
+    finally:
+        print("File size: {}".format(file_size))
+        for k, v in sorted(stat_codes_dict.items()):
+            if v != 0:
+                print("{}: {}".format(k, v))
+
+if __name__ == "__main__":
+    log_parser()
