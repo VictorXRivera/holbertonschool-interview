@@ -1,17 +1,19 @@
 #!/usr/bin/python3
 """Minimum Operations method"""
+
+
+def min_divider(n):
+    """Helper method that returns minimum divider of n int"""
+    for divider in range(2, n+1):
+        if n % divider == 0:
+            return divider
+
+
 def minOperations(n):
-    count = 0
-    while (n > 1):
-        if (n % 3 == 0):
-            n //= 3
-        
-        elif (n % 5 == 1):
-            n -= 1
-        else:
-            if (n == 2):
-                n -= 1
-            else:
-                n += 1
-        count += 1
-    return count
+    if not isinstance(n, int):
+        return 0
+    result = 0
+    while n > 1:
+        result += min_divider(n)
+        n = int(n / min_divider(n))
+    return result
