@@ -20,8 +20,7 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 }
 
 /**
- * avl_tree - recursive function that contructs
- * a AVL Tree from sorted array
+ * avl_tree - contructs an AVL Tree from sorted array
  * @array: pointer to the sorted array
  * @start: start index in the array
  * @end: end index in the array
