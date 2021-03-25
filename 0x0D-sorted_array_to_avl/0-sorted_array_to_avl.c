@@ -51,3 +51,4 @@ avl_t *avl_tree(int *array, int start, int end, avl_t *parent)
 	new_node->right = avl_tree(array, mid + 1, end, new_node);
 	return (new_node);
 }
+
