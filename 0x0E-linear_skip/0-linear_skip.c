@@ -21,7 +21,7 @@ skiplist_t *search(skiplist_t *i, skiplist_t *j, int value)
 }
 
 /**
- * linear_skip - function that searches for a value 
+ * linear_skip - function that searches for a value
  * in a sorted skip list of integers.
  * @list: pointer to the head of the skip list to search in
  * @value: the value to search for
