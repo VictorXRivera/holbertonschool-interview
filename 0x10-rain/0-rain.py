@@ -16,7 +16,11 @@ def rain(walls):
     """
     if type(walls) is not list or walls is []:
         return 0
-    for raindrop in walls:
-        if raindrop < 0:
-            return 0
-    return sum(walls[1:-1])
+    rainwater = 0
+    for rain in range(1, len(walls) - 1):
+        left = max(walls[:rain])
+        right = max(walls[rain + 1:])
+        minimum = min(left, right)
+        if walls[rain] < minimum:
+            rainwater += minimum - walls[rain]
+    return rainwater
