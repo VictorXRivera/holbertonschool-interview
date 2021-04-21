@@ -1,6 +1,7 @@
 #include "sort.h"
 /**
  * swap - swapping function
+ * @array: array to print
  * @v: value to swap
  * @r: value to swap
  * @x: numbers to be printed
@@ -15,9 +16,10 @@ void swap(int *v, int *r, int *array, size_t x)
 }
 /**
  * heapify - heapify function
- * @array: array of numbers
- * @n: n
- * @i: i
+ * @arr: array of numbers
+ * @h: h
+ * @b: b
+ * @size: size of array
  * Return: void
  */
 void heapify(int *arr, int h, int b, size_t size)
