@@ -53,7 +53,7 @@ void heap_sort(int *array, size_t size)
 	if (array == NULL)
 		return;
 
-	for (b = size / 2 - 1; b > 0; b--)
+	for (b = size / 2; b > 0; b--)
 		heapify(array, size, b - 1, size);
 
 	for (b = size - 1; b > 0; b--)
