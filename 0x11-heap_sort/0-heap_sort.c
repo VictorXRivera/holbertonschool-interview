@@ -1,45 +1,55 @@
 #include "sort.h"
 /**
- * siftDown - siftdown function
- * @key: key variable
- * @num: array
- * @root: root
- * @last: last number
- * Return: Void
+ * swap - swapping function
+ * @v: value to swap
+ * @r: value to swap
+ * Return: void
  */
-void siftDown(int key, int num[], int root, int last)
+void swap(int *v, int *r)
 {
-	int larger = 2 * root;
-	while (larger <= last)
-	{
-		if (larger < last)
-		{
-			if (num[larger + 1] > num[larger])
-				larger++;
-		}
-		if (key >= num[larger])
-			break;
+	int temp = *v;
+	*v = *r;
+	*r = temp;
+}
+/**
+ * heapify - heapify function
+ * @array: array of numbers
+ * @n: n
+ * @i: i
+ * Return: void
+ */
+void heapify(int *array, int n, int i)
+{
+	int largest = i;
+	int left = 2 * i + 1;
+	int right = 2 * i + 2;
 
-		num[root] = num[larger];
-		root = larger;
-		larger = 2 * root;
+	if (left < n && array[left] > array[largest])
+		largest = left;
+
+	if (right < n && array[right] > array[largest])
+		largest = right;
+
+	if (largest != i)
+	{
+		swap(&array[i], &array[largest]);
+		heapify(array, n, largest);
 	}
-	num[root] = key;
 }
 /**
  * heap_sort - heap sort algorithm
- * @array: array passed to function
- * @size: size of array?
- * Return: Void
+ * @array: array
+ * @size: size of array
+ * Return: void
  */
 void heap_sort(int *array, size_t size)
 {
-	for (int h = size / 2; h >= 1; h--)
-		siftDown(array[h], array, h, size);
-	for (int k = size; k > 1; k--)
+	for (int i = size / 2 - 1; i >= 0; i--)
+		heapify(array, size, i);
+
+	for (int i = size - 1; i >= 0; i--)
 	{
-		int item = array[k];
-		array[k] = array[1];
-		siftDown(item, array, 1, k - 1);
+		swap(&array[0], &array[i]);
+		heapify(array, i, 0);
 	}
 }
