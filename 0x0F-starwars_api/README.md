@@ -1,5 +1,7 @@
 # 0x0F. Star Wars API
+
 # Specializations - Interview Preparation ― Algorithms
+
 # By Alexa Orrico, Software Engineer at Holberton School
 
 ## Requirements
