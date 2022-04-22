@@ -1,4 +1,12 @@
+#!/usr/bin/python3
+'''
+Module used to call the canUnlockAll function
+'''
+
 def canUnlockAll(boxes):
+    '''
+    Method that determines if all the boxes can be opened.
+    '''
     unlocked = [0]
     for box_id, box in enumerate(boxes):
         if not box:
