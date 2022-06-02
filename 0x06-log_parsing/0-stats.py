@@ -1,19 +1,47 @@
 #!/usr/bin/python3
-"""Write a script that reads stdin line by line and computes metrics"""
+"""
+Log Parsing
+"""
+#!/usr/bin/python3
+"""  script that reads stdin line by line and computes metrics """
 
 import sys
-import json
 
-file_name = "log.txt"
-file = open(file_name, "r")
-data = []
-order = ["date", "url", "type", "message"]
+STATUS_CODES = {'200': 0,
+                '301': 0, '400': 0,
+                '401': 0, '403': 0,
+                '404': 0, '405': 0,
+                '500': 0}
 
-for line in file.readlines():
-    details = line.split("|")
-    details = [x.strip() for x in details]
-    structure = {key:value for key, value in zip(order, details)}
-    data.append(structure)
-    
-for entry in data:
-    print(json.dumps(entry, indent = 4))
+total_size = 0
+number_of_lines = 0
+
+
+def print_status_code(total_size):
+    print("File size: {:d}".format(total_size))
+    for key, value in sorted(STATUS_CODES.items()):
+        if value != 0:
+            print("{}: {:d}".format(key, value))
+
+
+try:
+    for argument in sys.stdin:
+        arguments = argument.split(" ")
+        if len(arguments) > 2:
+            status_code = arguments[-2]
+            file_size = arguments[-1]
+
+            if status_code in STATUS_CODES:
+                STATUS_CODES[status_code] += 1
+
+            total_size += int(file_size)
+            number_of_lines += 1
+
+            if number_of_lines == 10:
+                print_status_code(total_size)
+                number_of_lines = 0
+
+except KeyboardInterrupt:
+    pass
+finally:
+    print_status_code(total_size)
