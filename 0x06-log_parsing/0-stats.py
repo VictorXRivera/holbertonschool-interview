@@ -2,9 +2,6 @@
 """
 Log Parsing
 """
-#!/usr/bin/python3
-"""  script that reads stdin line by line and computes metrics """
-
 import sys
 
 STATUS_CODES = {'200': 0,
@@ -45,3 +42,4 @@ except KeyboardInterrupt:
     pass
 finally:
     print_status_code(total_size)
+
