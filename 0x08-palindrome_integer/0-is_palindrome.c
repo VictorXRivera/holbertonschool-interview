@@ -6,9 +6,9 @@
  */
 int is_palindrome(unsigned long n)
 {
-	unsigned long palin;
+	unsigned long pow_10;
 
-	palin = 10;
+	pow_10 = 10;
 	while (n / pow_10 >= 10)
 		pow_10 *= 10;
 
