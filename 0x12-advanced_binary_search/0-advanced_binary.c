@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "search_algos.h"
 
 /**
@@ -17,7 +15,15 @@ int advanced_binary(int *array, size_t size, int value)
 
 	return (binary_search(array, 0, size - 1, value));
 }
-
+/**
+ * binary_search - recursive function
+ * @array: array to search
+ * @left: left of array
+ * @right: right of array
+ * @value: value
+ *
+ * Return: function
+ */
 int binary_search(int *array, int left, int right, int value)
 {
 	int mid = (left + right) / 2;
@@ -25,8 +31,7 @@ int binary_search(int *array, int left, int right, int value)
 
 	if (left > right)
 		return (-1);
-	else
-		printf("Searching in array: ");
+	printf("Searching in array: ");
 
 	for (i = left; i <= right; i++)
 	{
