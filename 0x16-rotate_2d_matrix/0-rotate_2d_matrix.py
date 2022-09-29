@@ -1,4 +1,8 @@
 N = 3
+#!/usr/bin/python3
+"""
+Rotate 2D Matrix
+"""
 
 def rotate_2d_matrix(matrix):
     for x in range(0, int(N / 2)):
@@ -10,9 +14,3 @@ def rotate_2d_matrix(matrix):
             matrix[y][N-1-x] = matrix[N-1-x][N-1-y]
             matrix[N-1-x][N-1-y] = matrix[N-1-y][x]
             matrix[N-1-y][x] = temp
-
-def displayMatrix(matrix):
-    for i in range(0, N):
-        for j in range(0, N):
-            print(mat[i][j], end=' ')
-        print("")
