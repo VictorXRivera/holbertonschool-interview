@@ -15,18 +15,21 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    length = len(coins)
+    temp = total + 1
 
-    optimized = [0 for _ in range(total + 1)]
+    matrix = {0: 0}
 
     for i in range(1, total + 1):
-        smallest = float("inf")
-        for j in range(length):
-            if (coins[j] <= i):
-                smallest = min(smallest, optimized[i - coins[j]])
-        optimized[i] = 1 + smallest
+        matrix[i] = temp
 
-    if type(optimized[total]) is not int:
+        for coin in coins:
+            current = i - coin
+            if current < 0:
+                continue
+
+            matrix[i] = min(matrix[current] + 1, matrix[i])
+
+    if matrix[total] == total + 1:
         return -1
 
-    return optimized[total]
+    return matrix[total]
