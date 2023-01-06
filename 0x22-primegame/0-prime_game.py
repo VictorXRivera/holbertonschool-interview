@@ -1,73 +1,56 @@
 #!/usr/bin/python3
-"""Prime Game"""
-import random
+
+""" Prime Game """
+
+
+def prims(n, primes):
+    """ Calculate primes """
+    primers = primes[-1]
+    if n > primers:
+        for i in range(primers + 1, n + 1):
+            if is_prime(i):
+                primes.append(i)
+            else:
+                primes.append(0)
+
+
+def is_prime(n):
+    """ Checks if a number given n is a prime number """
+    for i in range(2, int(n ** 0.5) + 1):
+        if not n % i:
+            return False
+    return True
 
 
 def isWinner(x, nums):
-    """Maria and Ben are playing a game.
-    Given a set of consecutive integers starting from 1 up to and including n,
-    they take turns choosing a prime number from the set and removing that
-    number and its multiples from the set. The player that cannot make a move
-    loses the game."""
-    Maria = 1
-    Ben = 0
-    winner = {"Maria": 0, "Ben": 0}
-    for i in range(x):
-        round = nums[i]
-        if round == 1:
-            if Maria != 0:
-                winner["Maria"] += 1
-                continue
-            else:
-                winner["Ben"] += 1
-                continue
+    """
+    x :number of rounds  nums: array of n
+    Return:  player that won most rounds
+    If no winner, return None
+     n and x will not be larger than 10000
+    """
 
-        newList = random.sample(range(1, round + 1), round)
-        element = 0
-        for j in range(len(newList)):
-            if Maria != 0:
-                if len(newList) == 1:
-                    winner["Maria"] += 1
-                    Maria = 0
-                    Ben = 1
-                    break
-                picks = newList[element]
+    wins = {"Maria": 0, "Ben": 0}
 
-                if picks == 1:
-                    element += 1
-                    picks = newList[element]
-                index = 0
-                for multiples in range(len(newList)):
-                    if (len(newList) != 1 and (newList[index] % picks) == 0):
-                        newList.pop(index)
-                        index -= 1
-                        element -= 1
-                    index += 1
-                Ben = 1
-                Maria = 0
-                element += 1
-            else:
-                if len(newList) == 1:
-                    winner["Ben"] += 1
-                    Ben = 0
-                    Maria = 1
-                    break
-                picks = newList[element]
+    primes = [0, 0, 2]
 
-                if picks == 1:
-                    element += 1
-                    picks = newList[element]
-                index = 0
-                for multiples in range(len(newList)):
-                    if (len(newList) != 1 and (newList[index] % picks) == 0):
-                        newList.pop(index)
-                        index -= 1
-                        element -= 1
-                    index += 1
-                Maria = 1
-                Ben = 0
-                element += 1
-    if winner["Maria"] > winner["Ben"]:
+    prims(max(nums), primes)
+
+    for round in range(x):
+        sums = sum((i != 0 and i <= nums[round])for i in primes[
+            :nums[round] + 1])
+
+        if (sums % 2):
+            winner = "Maria"
+        else:
+            winner = "Ben"
+
+        if winner:
+            wins[winner] += 1
+
+    if wins["Maria"] > wins["Ben"]:
         return "Maria"
-    elif winner["Ben"] > winner["Maria"]:
+    elif wins["Ben"] > wins["Maria"]:
         return "Ben"
+
+    return None
